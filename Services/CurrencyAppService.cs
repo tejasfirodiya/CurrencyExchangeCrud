@@ -34,33 +34,63 @@ namespace CurrencyExchangeCrud.Services
 
         public async Task DeleteAsync(int id)
         {
-            await _currencyRepository.DeleteAsync(id);
+            try
+            {
+                await _currencyRepository.DeleteAsync(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public async Task<List<CurrencyMasterDto>> GetAllAsync()
         {
-            var currency = await _currencyRepository.GetAllAsync<CurrencyMasterDto>();
+            try
+            {
+                var currency = await _currencyRepository.GetAllAsync<CurrencyMasterDto>();
 
-            var dtoModels = currency
-                .Select(d => _mapper.Map<CurrencyMasterDto>(d))
-                .ToList();
+                var dtoModels = currency
+                    .Select(d => _mapper.Map<CurrencyMasterDto>(d))
+                    .ToList();
 
-            return dtoModels;
+                return dtoModels;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public async Task<CurrencyMasterDto?> GetByIdAsync(int id)
         {
-            var currency = await _currencyRepository.GetByIdAsync<CurrencyMasterDto>(id);
+            try
+            {
+                var currency = await _currencyRepository.GetByIdAsync<CurrencyMasterDto>(id);
 
-            var dtoModels = _mapper.Map<CurrencyMasterDto>(currency);
+                var dtoModels = _mapper.Map<CurrencyMasterDto>(currency);
 
-            return dtoModels;
+                return dtoModels;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public async Task UpdateAsync(CurrencyMasterDto currencyDto)
         {
-            var dtoModels = _mapper.Map<CurrencyMaster>(currencyDto);
-            await _currencyRepository.UpdateAsync(dtoModels);
+            try
+            {
+                currencyDto.Name = currencyDto.Name.Normalize();
+                currencyDto.Code = currencyDto.Code.ToUpper();
+                var dtoModels = _mapper.Map<CurrencyMaster>(currencyDto);
+                await _currencyRepository.UpdateAsync(dtoModels);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
     }
 }

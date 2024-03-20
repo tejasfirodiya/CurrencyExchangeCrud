@@ -19,64 +19,127 @@ namespace CurrencyExchangeCrud.Services
 
         public async Task<List<CurrencyExchangeRateDto>> GetAllAsync()
         {
-            var currency = await _currencyExchangeRateRepository.GetAllAsync<CurrencyExchangeRateDto>();
+            try
+            {
+                var currency = await _currencyExchangeRateRepository.GetAllAsync<CurrencyExchangeRateDto>();
 
-            var dtoModels = currency
-                .Select(d => _mapper.Map<CurrencyExchangeRateDto>(d))
-                .ToList();
+                var dtoModels = currency
+                    .Select(d => _mapper.Map<CurrencyExchangeRateDto>(d))
+                    .ToList();
 
-            return dtoModels;
+                return dtoModels;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public async Task<CurrencyExchangeRateDto?> GetByIdAsync(int id)
         {
-            var currency = await _currencyExchangeRateRepository.GetByIdAsync<CurrencyExchangeRateDto>(id);
+            try
+            {
+                var currency = await _currencyExchangeRateRepository.GetByIdAsync<CurrencyExchangeRateDto>(id);
 
-            var dtoModels = _mapper.Map<CurrencyExchangeRateDto>(currency);
+                var dtoModels = _mapper.Map<CurrencyExchangeRateDto>(currency);
 
-            return dtoModels;
+                return dtoModels;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public async Task CreateAsync(CurrencyExchangeRateDto currencyExchangeRateDto)
         {
-            var DataModel = _mapper.Map<CurrencyExchangeRate>(currencyExchangeRateDto);
-            await _currencyExchangeRateRepository.CreateAsync(DataModel);
+            try
+            {
+                var DataModel = _mapper.Map<CurrencyExchangeRate>(currencyExchangeRateDto);
+                await _currencyExchangeRateRepository.CreateAsync(DataModel);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public async Task UpdateAsync(CurrencyExchangeRateDto currencyExchangeRateDto)
         {
-            var dtoModels = _mapper.Map<CurrencyExchangeRate>(currencyExchangeRateDto);
-            await _currencyExchangeRateRepository.UpdateAsync(dtoModels);
+            try
+            {
+                var dtoModels = _mapper.Map<CurrencyExchangeRate>(currencyExchangeRateDto);
+                await _currencyExchangeRateRepository.UpdateAsync(dtoModels);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public async Task DeleteAsync(int id)
         {
-            await _currencyExchangeRateRepository.DeleteAsync(id);
+            try
+            {
+                await _currencyExchangeRateRepository.DeleteAsync(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public async Task<double> GetExchangeRateToINRByCurrencyCode(string currencyCode, DateTime? exchangeDate = null)
         {
-            var exchangeRate = await _currencyExchangeRateRepository.GetExchangeRateToINRByCurrencyCode(currencyCode, exchangeDate);
-            return exchangeRate;
+            try
+            {
+                var exchangeRate = await _currencyExchangeRateRepository.GetExchangeRateToINRByCurrencyCode(currencyCode, exchangeDate);
+                return exchangeRate;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public async Task<double> GetExchangeRateToINRByCurrencyName(string currencyName, DateTime? exchangeDate = null)
         {
-            var exchangeRate = await _currencyExchangeRateRepository.GetExchangeRateToINRByCurrencyName(currencyName, exchangeDate);
-            return exchangeRate;
+            try
+            {
+                var exchangeRate = await _currencyExchangeRateRepository.GetExchangeRateToINRByCurrencyName(currencyName, exchangeDate);
+                return exchangeRate;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public async Task<double> GetExchangeRateByCurrencyCode(string sourceCurrencyCode, string targetCurrencyCode, DateTime? exchangDate = null)
         {
-            var exchangeRate = await _currencyExchangeRateRepository.GetExchangeRateByCurrencyCode(sourceCurrencyCode, targetCurrencyCode, exchangDate);
-            return exchangeRate;
+            try
+            {
+                var exchangeRate = await _currencyExchangeRateRepository.GetExchangeRateByCurrencyCode(sourceCurrencyCode, targetCurrencyCode, exchangDate);
+                return exchangeRate;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public async Task<double> GetExchangeRateByCurrencyName(string sourceCurrencyName, string targetCurrencyName, DateTime? exchangDate = null)
         {
-            var exchangeRate = await _currencyExchangeRateRepository.GetExchangeRateByCurrencyName(sourceCurrencyName, targetCurrencyName, exchangDate);
+            try
+            {
+                var exchangeRate = await _currencyExchangeRateRepository.GetExchangeRateByCurrencyName(sourceCurrencyName, targetCurrencyName, exchangDate);
 
-            return exchangeRate;
+                return exchangeRate;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
     }

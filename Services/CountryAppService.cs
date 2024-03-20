@@ -19,40 +19,75 @@ namespace CurrencyExchangeCrud.Services
 
         public async Task CreateAsync(CountryMasterDto countryDto)
         {
-            countryDto.Name = countryDto.Name.Normalize();
-            var countryDataModel = _mapper.Map<CountryMaster>(countryDto);
-            await _countryRepository.CreateAsync(countryDataModel);
+            try
+            {
+                countryDto.Name = countryDto.Name.Normalize();
+                var countryDataModel = _mapper.Map<CountryMaster>(countryDto);
+                await _countryRepository.CreateAsync(countryDataModel);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public async Task DeleteAsync(int id)
         {
-            await _countryRepository.DeleteAsync(id);
+            try
+            {
+                await _countryRepository.DeleteAsync(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public async Task<List<CountryMasterDto>> GetAllAsync()
         {
-            var country = await _countryRepository.GetAllAsync<CountryMasterDto>();
+            try
+            {
+                var country = await _countryRepository.GetAllAsync<CountryMasterDto>();
 
-            var countryDtoModels = country
-                .Select(d => _mapper.Map<CountryMasterDto>(d))
-                .ToList();
+                var countryDtoModels = country
+                    .Select(d => _mapper.Map<CountryMasterDto>(d))
+                    .ToList();
 
-            return countryDtoModels;
+                return countryDtoModels;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public async Task<CountryMasterDto?> GetByIdAsync(int id)
         {
-            var country = await _countryRepository.GetByIdAsync<CountryMasterDto>(id);
+            try
+            {
+                var country = await _countryRepository.GetByIdAsync<CountryMasterDto>(id);
 
-            var countryDtoModels = _mapper.Map<CountryMasterDto>(country);
+                var countryDtoModels = _mapper.Map<CountryMasterDto>(country);
 
-            return countryDtoModels;
+                return countryDtoModels;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
 
         public async Task UpdateAsync(CountryMasterDto countryDto)
         {
-            var countryDtoModels = _mapper.Map<CountryMaster>(countryDto);
-            await _countryRepository.UpdateAsync(countryDtoModels);
+            try
+            {
+                var countryDtoModels = _mapper.Map<CountryMaster>(countryDto);
+                await _countryRepository.UpdateAsync(countryDtoModels);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
     }
 }
